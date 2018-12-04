@@ -6,10 +6,17 @@ declare(strict_types = 1);
 use Amp\Loop;
 use Desperado\ServiceBus\Application\Bootstrap;
 use Desperado\ServiceBus\Application\ServiceBusKernel;
+use Desperado\ServiceBus\Infrastructure\Transport\Implementation\Amqp\AmqpTransportLevelDestination;
 use Desperado\ServiceBus\Infrastructure\Transport\Implementation\Amqp\AmqpExchange;
 use Desperado\ServiceBus\Infrastructure\Transport\Implementation\Amqp\AmqpQueue;
 use Desperado\ServiceBus\Infrastructure\Transport\QueueBind;
+use Desperado\ServiceBus\Infrastructure\Transport\TopicBind;
 use Desperado\ServiceBus\Infrastructure\Storage\SQL\AmpPostgreSQL\AmpPostgreSQLAdapter;
+use Desperado\ServiceBus\Scheduler\Messages\Command\EmitSchedulerOperation;
+use Desperado\ServiceBus\Endpoint\ApplicationTransportEndpoint;
+
+/** Use https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh instead sleep() function for RabbitMQ */
+\sleep(8);
 
 include __DIR__ . '/../vendor/autoload.php';
 
@@ -48,6 +55,27 @@ Loop::run(
                 $mainExchange,
                 (string) \getenv('TRANSPORT_ROUTING_KEY'))
         );
+
+        /** Scheduler configuration */
+        yield $transport->createTopic(
+            AmqpExchange::delayed((string) \getenv('SCHEDULER_TOPIC')),
+            new TopicBind(
+                $mainExchange,
+                \getenv('TRANSPORT_ROUTING_KEY')
+            )
+        );
+
+        $kernel->registerMessageCustomEndpoint(
+            EmitSchedulerOperation::class,
+            new ApplicationTransportEndpoint(
+                $transport,
+                new AmqpTransportLevelDestination(
+                    (string) \getenv('SCHEDULER_TOPIC'),
+                    \getenv('TRANSPORT_ROUTING_KEY')
+                )
+            )
+        );
+        /**  */
 
         $kernel->useDefaultStopSignalHandler(3);
 
