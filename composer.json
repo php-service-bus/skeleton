@@ -7,7 +7,7 @@
   "require": {
     "php": ">=7.2",
     "ext-json": "*",
-    "mmasiukevich/service-bus": "^v2.2"
+    "mmasiukevich/service-bus": "^v2.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4",
@@ -26,7 +26,8 @@
     },
     "files": [
       "app/AppExtension.php",
-      "app/PostgreSQLSchemaBuilder.php"
+      "app/PostgreSQLSchemaBuilder.php",
+      "tools/ToolsPublisher.php"
     ]
   },
   "autoload-dev": {
@@ -35,13 +36,14 @@
     },
     "files": [
       "app/AppExtension.php",
-      "app/PostgreSQLSchemaBuilder.php"
+      "app/PostgreSQLSchemaBuilder.php",
+      "tools/ToolsPublisher.php"
     ]
   },
   "scripts": {
     "psalm": "./vendor/bin/psalm --config=psalm.xml",
-    "phpunit": "phpunit --configuration phpunit.xml --verbose",
-    "coverage": "phpunit --configuration phpunit.xml --coverage-html ./coverage --verbose",
+    "phpunit": "./vendor/bin/phpunit --configuration phpunit.xml --verbose",
+    "coverage": "./vendor/bin/phpunit --configuration phpunit.xml --coverage-html ./coverage --verbose",
     "test": [
       "@phpunit"
     ]
