@@ -17,6 +17,8 @@ final class AppExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator());
+
         $loader->load(__DIR__ . '/config/services.yaml');
+        $loader->load(__DIR__ . '/config/logger.yaml');
     }
 }
