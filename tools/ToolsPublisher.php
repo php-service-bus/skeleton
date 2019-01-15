@@ -9,7 +9,7 @@ use Desperado\ServiceBus\Infrastructure\MessageSerialization\MessageEncoder;
 use Desperado\ServiceBus\Infrastructure\MessageSerialization\Symfony\SymfonyMessageSerializer;
 use Desperado\ServiceBus\Infrastructure\Transport\Implementation\Amqp\AmqpConnectionConfiguration;
 use Desperado\ServiceBus\Infrastructure\Transport\Implementation\Amqp\AmqpTransportLevelDestination;
-use Desperado\ServiceBus\Infrastructure\Transport\Implementation\BunnyRabbitMQ\BunnyRabbitMqTransport;
+use Desperado\ServiceBus\Infrastructure\Transport\Implementation\PhpInnacle\PhpInnacleTransport;
 use Desperado\ServiceBus\Infrastructure\Transport\Package\OutboundPackage;
 use Desperado\ServiceBus\Infrastructure\Transport\Transport;
 use Symfony\Component\Dotenv\Dotenv;
@@ -79,7 +79,7 @@ final class ToolsPublisher
     {
         if(null === $this->transport)
         {
-            $this->transport = new BunnyRabbitMqTransport(
+            $this->transport = new PhpInnacleTransport(
                 new AmqpConnectionConfiguration(\getenv('TRANSPORT_CONNECTION_DSN'))
             );
 
