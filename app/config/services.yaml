@@ -1,9 +1,2 @@
 services:
-  # Generate PostgreSQL schema for service-bus components
-  postgresql_schema_builder:
-    class: PostgreSQLSchemaBuilder
-    public: true
-    arguments:
-      $adapter: '@Desperado\ServiceBus\Infrastructure\Storage\StorageAdapter'
-
   # ... Some custom service definitions

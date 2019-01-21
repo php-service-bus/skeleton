@@ -3,20 +3,17 @@
   "description": "PHP Service Bus skeleton",
   "type": "project",
   "license": "MIT",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "require": {
     "php": ">=7.2",
     "ext-json": "*",
-    "mmasiukevich/service-bus": "^v2.4"
+    "mmasiukevich/service-bus": "dev-3.0-refactoring"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4",
     "vimeo/psalm": "^3"
   },
   "config": {
-    "preferred-install": {
-      "*": "dist"
-    },
     "sort-packages": true,
     "optimize-autoloader": true
   },
@@ -26,7 +23,6 @@
     },
     "files": [
       "app/AppExtension.php",
-      "app/PostgreSQLSchemaBuilder.php",
       "tools/ToolsPublisher.php"
     ]
   },
@@ -36,7 +32,6 @@
     },
     "files": [
       "app/AppExtension.php",
-      "app/PostgreSQLSchemaBuilder.php",
       "tools/ToolsPublisher.php"
     ]
   },

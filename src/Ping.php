@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace App;
 
-use Desperado\ServiceBus\Common\Contract\Messages\Command;
+use ServiceBus\Common\Messages\Command;
 
 /**
  * @api

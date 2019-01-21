@@ -2,16 +2,18 @@
 
 declare(strict_types = 1);
 
+namespace ee;
+
 use function Amp\Promise\wait;
-use Desperado\ServiceBus\Common\Contract\Messages\Message;
-use function Desperado\ServiceBus\Common\uuid;
-use Desperado\ServiceBus\Infrastructure\MessageSerialization\MessageEncoder;
-use Desperado\ServiceBus\Infrastructure\MessageSerialization\Symfony\SymfonyMessageSerializer;
-use Desperado\ServiceBus\Infrastructure\Transport\Implementation\Amqp\AmqpConnectionConfiguration;
-use Desperado\ServiceBus\Infrastructure\Transport\Implementation\Amqp\AmqpTransportLevelDestination;
-use Desperado\ServiceBus\Infrastructure\Transport\Implementation\PhpInnacle\PhpInnacleTransport;
-use Desperado\ServiceBus\Infrastructure\Transport\Package\OutboundPackage;
-use Desperado\ServiceBus\Infrastructure\Transport\Transport;
+use ServiceBus\Common\Messages\Message;
+use function ServiceBus\Common\uuid;
+use ServiceBus\MessageSerializer\MessageEncoder;
+use ServiceBus\MessageSerializer\Symfony\SymfonyMessageSerializer;
+use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
+use ServiceBus\Transport\Amqp\AmqpTransportLevelDestination;
+use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleTransport;
+use ServiceBus\Transport\Common\Package\OutboundPackage;
+use ServiceBus\Transport\Common\Transport;
 use Symfony\Component\Dotenv\Dotenv;
 
 /**
@@ -33,6 +35,9 @@ final class ToolsPublisher
 
     /**
      * @param string $envPath
+     *
+     * @throws \Symfony\Component\Dotenv\Exception\FormatException
+     * @throws \Symfony\Component\Dotenv\Exception\PathException
      */
     public function __construct(string $envPath)
     {
@@ -44,14 +49,17 @@ final class ToolsPublisher
     /**
      * Send message to queue
      *
-     * @noinspection PhpDocMissingThrowsInspection
-     *
      * @param Message     $message
      * @param string|null $traceId
      * @param string|null $topic
      * @param string|null $routingKey
      *
      * @return void
+     *
+     * @throws \ServiceBus\MessageSerializer\Exceptions\EncodeMessageFailed
+     * @throws \ServiceBus\Transport\Common\Exceptions\InvalidConnectionParameters
+     * @throws \ServiceBus\Transport\Common\Exceptions\SendMessageFailed
+     * @throws \Throwable
      */
     public function sendMessage(Message $message, string $traceId = null, ?string $topic = null, ?string $routingKey = null): void
     {
@@ -61,10 +69,11 @@ final class ToolsPublisher
         /** @noinspection PhpUnhandledExceptionInspection */
         wait(
             $this->transport()->send(
-                new OutboundPackage(
+                OutboundPackage::create(
                     $this->encoder->encode($message),
                     [Transport::SERVICE_BUS_TRACE_HEADER => $traceId ?? uuid()],
-                    new AmqpTransportLevelDestination($topic, $routingKey)
+                    AmqpTransportLevelDestination::create($topic, $routingKey),
+                    uuid()
                 )
             )
         );
@@ -74,6 +83,8 @@ final class ToolsPublisher
      * @noinspection PhpDocMissingThrowsInspection
      *
      * @return Transport
+     *
+     * @throws \ServiceBus\Transport\Common\Exceptions\InvalidConnectionParameters
      */
     private function transport(): Transport
     {

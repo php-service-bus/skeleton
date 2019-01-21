@@ -14,9 +14,9 @@ declare(strict_types = 1);
 namespace App;
 
 use Amp\Promise;
-use Desperado\ServiceBus\Application\KernelContext;
-use Desperado\ServiceBus\Services\Annotations\CommandHandler;
-use Desperado\ServiceBus\Services\Annotations\EventListener;
+use ServiceBus\Context\KernelContext;
+use ServiceBus\Services\Annotations\CommandHandler;
+use ServiceBus\Services\Annotations\EventListener;
 
 /**
  *

@@ -1,7 +1,7 @@
 FROM php:7.2-cli-alpine
 
 RUN set -xe \
-    && apk add --no-cache --virtual .persistent-deps  postgresql-dev zlib-dev libevent-dev libpq \
+    && apk add --no-cache --virtual .persistent-deps git postgresql-dev zlib-dev libevent-dev libpq \
     && apk add --no-cache --virtual .build-deps autoconf g++ libtool make \
     && docker-php-ext-install \
         bcmath \
