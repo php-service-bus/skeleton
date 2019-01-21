@@ -5,11 +5,10 @@ declare(strict_types = 1);
 
 use Amp\Loop;
 use ServiceBus\Application\ServiceBusKernel;
-use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleTransport;
-use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
-use ServiceBus\Transport\Amqp\AmqpQoSConfiguration;
 use ServiceBus\Transport\Amqp\AmqpExchange;
 use ServiceBus\Transport\Amqp\AmqpQueue;
+use ServiceBus\Transport\Common\QueueBind;
+use ServiceBus\Transport\Amqp\DependencyInjection\PhpInnacleTransportExtension;
 
 /** Use https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh instead sleep() function for RabbitMQ */
 \sleep(8);
@@ -19,7 +18,14 @@ include __DIR__ . '/../vendor/autoload.php';
 /** @var \Symfony\Component\DependencyInjection\Container $container */
 $container = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
     ->useCustomCacheDirectory(__DIR__ . '/../cache')
-    ->addExtensions(new \AppExtension())
+    ->addExtensions(
+        new \AppExtension(),
+        new PhpInnacleTransportExtension(
+            (string) \getenv('TRANSPORT_CONNECTION_DSN'),
+            (string) \getenv('SENDER_DESTINATION_TOPIC'),
+            (string) \getenv('SENDER_DESTINATION_TOPIC_ROUTING_KEY')
+        )
+    )
     ->importParameters(['app.log_level' => (string) \getenv('LOG_LEVEL')])
     ->enableAutoImportMessageHandlers([__DIR__ . '/../src'])
     ->boot();
@@ -27,16 +33,16 @@ $container = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
 Loop::run(
     static function() use ($container): \Generator
     {
-        $transport = new PhpInnacleTransport(
-            new AmqpConnectionConfiguration((string) \getenv('TRANSPORT_CONNECTION_DSN')),
-            new AmqpQoSConfiguration()
-        );
-
         $mainExchange = AmqpExchange::direct((string) \getenv('TRANSPORT_TOPIC'), true);
         $mainQueue    = AmqpQueue::default((string) \getenv('TRANSPORT_QUEUE'), true);
 
-        $kernel = new ServiceBusKernel($transport, $container);
-        $kernel->useDefaultStopSignalHandler(3);
+        $kernel = (new ServiceBusKernel($container))
+            ->useDefaultStopSignalHandler(3);
+
+        yield $kernel->createQueue(
+            $mainQueue,
+            QueueBind::create($mainExchange, (string) \getenv('TRANSPORT_ROUTING_KEY'))
+        );
 
         yield $kernel->run($mainQueue);
     }

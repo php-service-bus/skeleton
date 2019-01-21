@@ -2,8 +2,6 @@
 
 declare(strict_types = 1);
 
-namespace ee;
-
 use function Amp\Promise\wait;
 use ServiceBus\Common\Messages\Message;
 use function ServiceBus\Common\uuid;
@@ -72,7 +70,7 @@ final class ToolsPublisher
                 OutboundPackage::create(
                     $this->encoder->encode($message),
                     [Transport::SERVICE_BUS_TRACE_HEADER => $traceId ?? uuid()],
-                    AmqpTransportLevelDestination::create($topic, $routingKey),
+                    new AmqpTransportLevelDestination($topic, $routingKey),
                     uuid()
                 )
             )

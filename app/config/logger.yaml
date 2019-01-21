@@ -16,11 +16,11 @@ services:
 
   # Echo stream handler
   service_bus.logger.handlers.stdout_handler:
-    class: Desperado\ServiceBus\Infrastructure\Logger\Handlers\StdOut\StdOutHandler
+    class: ServiceBus\Infrastructure\Logger\Handlers\StdOut\StdOutHandler
 
   # Graylog handler
   #service_bus.logger.handlers.graylog_handler:
-    #class: Desperado\ServiceBus\Infrastructure\Logger\Handlers\Graylog\GelfUdpHandler
+    #class: ServiceBus\Infrastructure\Logger\Handlers\Graylog\GelfUdpHandler
     #arguments:
       #$host: '%app.logger.graylog.udp_host%'
       #$port: '%app.logger.graylog.udp_port%'
