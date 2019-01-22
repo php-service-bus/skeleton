@@ -18,14 +18,6 @@ services:
   service_bus.logger.handlers.stdout_handler:
     class: ServiceBus\Infrastructure\Logger\Handlers\StdOut\StdOutHandler
 
-  # Graylog handler
-  #service_bus.logger.handlers.graylog_handler:
-    #class: ServiceBus\Infrastructure\Logger\Handlers\Graylog\GelfUdpHandler
-    #arguments:
-      #$host: '%app.logger.graylog.udp_host%'
-      #$port: '%app.logger.graylog.udp_port%'
-      #$gzipMessage: false
-
   # Default logger instance
   service_bus.logger:
     class: Monolog\Logger
@@ -33,7 +25,6 @@ services:
       $name: '%service_bus.entry_point%'
       $handlers:
         - '@service_bus.logger.handlers.stdout_handler'
-        #- '@service_bus.logger.handlers.graylog_handler'
       $processors:
         - '@service_bus.logger.processors.memory_usage'
         - '@service_bus.logger.processors.process_id'
