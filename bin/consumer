@@ -8,7 +8,7 @@ use ServiceBus\Application\ServiceBusKernel;
 use ServiceBus\Transport\Amqp\AmqpExchange;
 use ServiceBus\Transport\Amqp\AmqpQueue;
 use ServiceBus\Transport\Common\QueueBind;
-use ServiceBus\Transport\Amqp\DependencyInjection\PhpInnacleTransportExtension;
+use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleTransportModule;
 
 /** Use https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh instead sleep() function for RabbitMQ */
 \sleep(8);
@@ -18,16 +18,16 @@ include __DIR__ . '/../vendor/autoload.php';
 /** @var \Symfony\Component\DependencyInjection\Container $container */
 $container = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
     ->useCustomCacheDirectory(__DIR__ . '/../cache')
-    ->addExtensions(
-        new \AppExtension(),
-        new PhpInnacleTransportExtension(
+    ->addExtensions(new \AppExtension())
+    ->importParameters(['app.log_level' => (string) \getenv('LOG_LEVEL')])
+    ->enableAutoImportMessageHandlers([__DIR__ . '/../src'])
+    ->applyModules(
+        new PhpInnacleTransportModule(
             (string) \getenv('TRANSPORT_CONNECTION_DSN'),
             (string) \getenv('SENDER_DESTINATION_TOPIC'),
             (string) \getenv('SENDER_DESTINATION_TOPIC_ROUTING_KEY')
         )
     )
-    ->importParameters(['app.log_level' => (string) \getenv('LOG_LEVEL')])
-    ->enableAutoImportMessageHandlers([__DIR__ . '/../src'])
     ->boot();
 
 Loop::run(
