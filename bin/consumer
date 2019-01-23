@@ -8,7 +8,7 @@ use ServiceBus\Application\ServiceBusKernel;
 use ServiceBus\Transport\Amqp\AmqpExchange;
 use ServiceBus\Transport\Amqp\AmqpQueue;
 use ServiceBus\Transport\Common\QueueBind;
-use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleTransportModule;
+use ServiceBus\Transport\Module\PhpInnacleTransportModule;
 
 /** Use https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh instead sleep() function for RabbitMQ */
 \sleep(8);

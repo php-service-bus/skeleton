@@ -9,7 +9,7 @@ use ServiceBus\MessageSerializer\MessageEncoder;
 use ServiceBus\MessageSerializer\Symfony\SymfonyMessageSerializer;
 use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
 use ServiceBus\Transport\Amqp\AmqpTransportLevelDestination;
-use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleTransport;
+use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
 use ServiceBus\Transport\Common\Package\OutboundPackage;
 use ServiceBus\Transport\Common\Transport;
 use Symfony\Component\Dotenv\Dotenv;
