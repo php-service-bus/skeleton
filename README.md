@@ -1,7 +1,7 @@
 ## Usage
 
 ```bash
-composer create-project mmasiukevich/service-bus-skeleton my-project
+composer create-project php-service-bus/skeleton my-project
 cd my-project
 docker-compose up --build
 ```

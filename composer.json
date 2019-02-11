@@ -1,5 +1,5 @@
 {
-  "name": "mmasiukevich/service-bus-skeleton",
+  "name": "php-service-bus/skeleton",
   "description": "PHP Service Bus skeleton",
   "type": "project",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "require": {
     "php": ">=7.2",
     "ext-json": "*",
-    "mmasiukevich/service-bus": "^v2.4"
+    "php-service-bus/service-bus": "^v2.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4",
