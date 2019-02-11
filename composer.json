@@ -1,5 +1,5 @@
 {
-  "name": "mmasiukevich/service-bus-skeleton",
+  "name": "php-service-bus/service-bus-skeleton",
   "description": "PHP Service Bus skeleton",
   "type": "project",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "require": {
     "php": ">=7.2",
     "ext-json": "*",
-    "mmasiukevich/service-bus": "dev-3.0-refactoring",
+    "php-service-bus/service-bus": "v3.0.x-dev",
     "php-service-bus/module-phpinnacle-transport": "^v3.0"
   },
   "require-dev": {
