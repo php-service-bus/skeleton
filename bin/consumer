@@ -16,8 +16,8 @@ use ServiceBus\Application\DependencyInjection\Compiler\Logger\StdOutLoggerCompi
 
 include __DIR__ . '/../vendor/autoload.php';
 
-/** @var \Symfony\Component\DependencyInjection\Container $container */
-$container = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
+/** @noinspection PhpUnhandledExceptionInspection */
+$bootstrap = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
     ->useCustomCacheDirectory(__DIR__ . '/../cache')
     ->addCompilerPasses(new StdOutLoggerCompilerPass())
     ->addExtensions(new \AppExtension())
@@ -29,8 +29,10 @@ $container = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
             (string) \getenv('SENDER_DESTINATION_TOPIC'),
             (string) \getenv('SENDER_DESTINATION_TOPIC_ROUTING_KEY')
         )
-    )
-    ->boot();
+    );
+
+/** @noinspection PhpUnhandledExceptionInspection */
+$container = $bootstrap->boot();
 
 Loop::run(
     static function() use ($container): \Generator
