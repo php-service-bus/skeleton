@@ -19,6 +19,5 @@ final class AppExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator());
 
         $loader->load(__DIR__ . '/config/services.yaml');
-        $loader->load(__DIR__ . '/config/logger.yaml');
     }
 }
