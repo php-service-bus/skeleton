@@ -11,7 +11,7 @@
     "php-service-bus/module-phpinnacle-transport": "^v3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7",
+    "phpunit/phpunit": "^8",
     "vimeo/psalm": "^v3"
   },
   "config": {
