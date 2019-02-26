@@ -13,13 +13,10 @@ declare(strict_types = 1);
 
 namespace App;
 
-use ServiceBus\Common\Messages\Event;
-
 /**
  * @api
- * @see Ping
  */
-final class Pong implements Event
+final class Pong
 {
 
 }

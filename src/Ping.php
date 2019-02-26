@@ -13,13 +13,11 @@ declare(strict_types = 1);
 
 namespace App;
 
-use ServiceBus\Common\Messages\Command;
-
 /**
  * @api
  * @see Pong
  */
-final class Ping implements Command
+final class Ping
 {
 
 }
