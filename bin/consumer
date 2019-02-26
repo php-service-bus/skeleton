@@ -21,7 +21,6 @@ $bootstrap = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
     ->useCustomCacheDirectory(__DIR__ . '/../cache')
     ->addCompilerPasses(new StdOutLoggerCompilerPass())
     ->addExtensions(new \AppExtension())
-    ->importParameters(['app.log_level' => (string) \getenv('LOG_LEVEL')])
     ->enableAutoImportMessageHandlers([__DIR__ . '/../src'])
     ->applyModules(
         new PhpInnacleTransportModule(
