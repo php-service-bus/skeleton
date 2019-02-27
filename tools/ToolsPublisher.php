@@ -8,13 +8,13 @@ use ServiceBus\MessageSerializer\MessageEncoder;
 use ServiceBus\MessageSerializer\Symfony\SymfonyMessageSerializer;
 use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
 use ServiceBus\Transport\Amqp\AmqpTransportLevelDestination;
-use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
 use ServiceBus\Transport\Common\Package\OutboundPackage;
 use ServiceBus\Transport\Common\Transport;
+use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
 use Symfony\Component\Dotenv\Dotenv;
 
 /**
- * Tools message publisher
+ * Tools message publisher.
  *
  * For tests/debug only
  */
@@ -44,19 +44,20 @@ final class ToolsPublisher
     }
 
     /**
-     * Send message to queue
+     * Send message to queue.
      *
      * @param object      $message
      * @param string|null $traceId
      * @param string|null $topic
      * @param string|null $routingKey
      *
-     * @return void
-     *
      * @throws \ServiceBus\MessageSerializer\Exceptions\EncodeMessageFailed
      * @throws \ServiceBus\Transport\Common\Exceptions\InvalidConnectionParameters
      * @throws \ServiceBus\Transport\Common\Exceptions\SendMessageFailed
      * @throws \Throwable
+     *
+     * @return void
+     *
      */
     public function sendMessage(object $message, string $traceId = null, ?string $topic = null, ?string $routingKey = null): void
     {
@@ -79,13 +80,14 @@ final class ToolsPublisher
     /**
      * @noinspection PhpDocMissingThrowsInspection
      *
+     * @throws \ServiceBus\Transport\Common\Exceptions\InvalidConnectionParameters
+     *
      * @return Transport
      *
-     * @throws \ServiceBus\Transport\Common\Exceptions\InvalidConnectionParameters
      */
     private function transport(): Transport
     {
-        if(null === $this->transport)
+        if (null === $this->transport)
         {
             $this->transport = new PhpInnacleTransport(
                 new AmqpConnectionConfiguration(\getenv('TRANSPORT_CONNECTION_DSN'))

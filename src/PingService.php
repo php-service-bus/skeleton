@@ -2,7 +2,7 @@
 
 /**
  * PHP Service Bus (publish-subscribe pattern implementation) demo
- * Supports Saga pattern and Event Sourcing
+ * Supports Saga pattern and Event Sourcing.
  *
  * @author  Maksim Masiukevich <desperado@minsk-info.ru>
  * @license MIT
