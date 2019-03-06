@@ -10,6 +10,7 @@ use ServiceBus\Transport\Amqp\AmqpQueue;
 use ServiceBus\Transport\Common\QueueBind;
 use ServiceBus\Transport\Module\PhpInnacleTransportModule;
 use ServiceBus\Application\DependencyInjection\Compiler\Logger\StdOutLoggerCompilerPass;
+use ServiceBus\Application\Bootstrap;
 
 /** Use https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh instead sleep() function for RabbitMQ */
 \sleep(8);
@@ -17,7 +18,7 @@ use ServiceBus\Application\DependencyInjection\Compiler\Logger\StdOutLoggerCompi
 include __DIR__ . '/../vendor/autoload.php';
 
 /** @noinspection PhpUnhandledExceptionInspection */
-$bootstrap = \ServiceBus\Application\Bootstrap::withDotEnv(__DIR__ . '/../.env')
+$bootstrap = Bootstrap::withDotEnv(__DIR__ . '/../.env')
     ->useCustomCacheDirectory(__DIR__ . '/../cache')
     ->addCompilerPasses(new StdOutLoggerCompilerPass())
     ->addExtensions(new \AppExtension())
