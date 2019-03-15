@@ -37,17 +37,25 @@ $container = $bootstrap->boot();
 Loop::run(
     static function() use ($container): \Generator
     {
-        $mainExchange = AmqpExchange::direct((string) \getenv('TRANSPORT_TOPIC'), true);
-        $mainQueue    = AmqpQueue::default((string) \getenv('TRANSPORT_QUEUE'), true);
+        try
+        {
+            $mainExchange = AmqpExchange::direct((string) \getenv('TRANSPORT_TOPIC'), true);
+            $mainQueue    = AmqpQueue::default((string) \getenv('TRANSPORT_QUEUE'), true);
 
-        $kernel = (new ServiceBusKernel($container))
-            ->useDefaultStopSignalHandler(3);
+            $kernel = (new ServiceBusKernel($container))
+                ->useDefaultStopSignalHandler(3);
 
-        yield $kernel->createQueue(
-            $mainQueue,
-            QueueBind::create($mainExchange, (string) \getenv('TRANSPORT_ROUTING_KEY'))
-        );
+            yield $kernel->createQueue(
+                $mainQueue,
+                QueueBind::create($mainExchange, (string) \getenv('TRANSPORT_ROUTING_KEY'))
+            );
 
-        yield $kernel->run($mainQueue);
+            yield $kernel->run($mainQueue);
+        }
+        catch(\Throwable $throwable)
+        {
+            echo $throwable->getMessage(), \PHP_EOL;
+            exit;
+        }
     }
 );
