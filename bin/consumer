@@ -47,7 +47,7 @@ Loop::run(
 
             yield $kernel->createQueue(
                 $mainQueue,
-                QueueBind::create($mainExchange, (string) \getenv('TRANSPORT_ROUTING_KEY'))
+                new QueueBind($mainExchange, (string) \getenv('TRANSPORT_ROUTING_KEY'))
             );
 
             yield $kernel->run($mainQueue);

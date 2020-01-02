@@ -31,33 +31,18 @@ final class ToolsPublisher
     private $encoder;
 
     /**
-     * @param string $envPath
-     *
      * @throws \Symfony\Component\Dotenv\Exception\FormatException
      * @throws \Symfony\Component\Dotenv\Exception\PathException
      */
     public function __construct(string $envPath)
     {
-        (new Dotenv())->load($envPath);
+        (new Dotenv(true))->load($envPath);
 
         $this->encoder = new SymfonyMessageSerializer();
     }
 
     /**
      * Send message to queue.
-     *
-     * @param object      $message
-     * @param string|null $traceId
-     * @param string|null $topic
-     * @param string|null $routingKey
-     *
-     * @throws \ServiceBus\MessageSerializer\Exceptions\EncodeMessageFailed
-     * @throws \ServiceBus\Transport\Common\Exceptions\InvalidConnectionParameters
-     * @throws \ServiceBus\Transport\Common\Exceptions\SendMessageFailed
-     * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function sendMessage(object $message, string $traceId = null, ?string $topic = null, ?string $routingKey = null): void
     {
@@ -67,7 +52,7 @@ final class ToolsPublisher
         /** @noinspection PhpUnhandledExceptionInspection */
         wait(
             $this->transport()->send(
-                OutboundPackage::create(
+                new OutboundPackage(
                     $this->encoder->encode($message),
                     [Transport::SERVICE_BUS_TRACE_HEADER => $traceId ?? uuid()],
                     new AmqpTransportLevelDestination($topic, $routingKey),
@@ -77,14 +62,6 @@ final class ToolsPublisher
         );
     }
 
-    /**
-     * @noinspection PhpDocMissingThrowsInspection
-     *
-     * @throws \ServiceBus\Transport\Common\Exceptions\InvalidConnectionParameters
-     *
-     * @return Transport
-     *
-     */
     private function transport(): Transport
     {
         if (null === $this->transport)

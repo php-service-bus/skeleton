@@ -14,7 +14,7 @@ declare(strict_types = 1);
 namespace App;
 
 use Amp\Promise;
-use ServiceBus\Context\KernelContext;
+use ServiceBus\Common\Context\ServiceBusContext;
 use ServiceBus\Services\Annotations\CommandHandler;
 use ServiceBus\Services\Annotations\EventListener;
 
@@ -25,27 +25,17 @@ final class PingService
 {
     /**
      * @CommandHandler()
-     *
-     * @param Ping          $command
-     * @param KernelContext $context
-     *
-     * @return Promise
      */
-    public function handle(Ping $command, KernelContext $context): Promise
+    public function handle(Ping $command, ServiceBusContext $context): Promise
     {
         return $context->delivery(new Pong());
     }
 
     /**
-     * @EventListener()
-     *
-     * @param Pong          $event
-     * @param KernelContext $context
-     *
-     * @return void
+     * @EventListener(description="Pong message received")
      */
-    public function whenPong(Pong $event, KernelContext $context): void
+    public function whenPong(Pong $event, ServiceBusContext $context): void
     {
-        $context->logContextMessage('Pong message received');
+
     }
 }
