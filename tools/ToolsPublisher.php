@@ -10,7 +10,7 @@ use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
 use ServiceBus\Transport\Amqp\AmqpTransportLevelDestination;
 use ServiceBus\Transport\Common\Package\OutboundPackage;
 use ServiceBus\Transport\Common\Transport;
-use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
+use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleTransport;
 use Symfony\Component\Dotenv\Dotenv;
 
 /**
@@ -36,7 +36,7 @@ final class ToolsPublisher
      */
     public function __construct(string $envPath)
     {
-        (new Dotenv(true))->load($envPath);
+        (new Dotenv())->usePutenv(true)->load($envPath);
 
         $this->encoder = new SymfonyMessageSerializer();
     }
