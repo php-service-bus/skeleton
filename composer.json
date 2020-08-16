@@ -7,7 +7,10 @@
   "require": {
     "php": ">=7.4",
     "ext-json": "*",
-    "php-service-bus/service-bus": "v4.1.*"
+    "php-service-bus/service-bus": "v4.1.*",
+    "php-service-bus/sagas": "v4.2.*",
+    "php-service-bus/event-sourcing": "v4.2.*",
+    "php-service-bus/scheduler": "v4.2.*"
   },
   "require-dev": {
     "php-service-bus/code-style-config": "v1.2.*",

@@ -25,6 +25,8 @@ services:
       POSTGRES_USER: demo
     ports:
       - 5432:5432
+    volumes:
+      - ./docker/postgresql/schema.sql:/docker-entrypoint-initdb.d/init.sql
 
   app:
     build:

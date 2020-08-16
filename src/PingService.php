@@ -36,6 +36,5 @@ final class PingService
      */
     public function whenPong(Pong $event, ServiceBusContext $context): void
     {
-
     }
 }

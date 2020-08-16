@@ -8,12 +8,12 @@ The basic skeleton of the application, which includes Publish\Subscribe pattern 
 ```bash
 composer create-project php-service-bus/skeleton my-project
 cd my-project
-docker-compose up --build
+make start && make consumer-logs
 ```
 After launching containers, execute
 
 ```bash
-tools/ping
+make ping && make consumer-logs
 ```
 ## Documentation
 Documentation can be found in the [documentation](https://github.com/php-service-bus/documentation) repository
