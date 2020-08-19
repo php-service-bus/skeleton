@@ -18,6 +18,17 @@ final class AppExtension extends Extension
     {
         $loader = new YamlFileLoader($container, new FileLocator());
 
-        $loader->load(__DIR__ . '/config/services.yaml');
+        $regexIterator = new RegexIterator(
+            new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator(__DIR__ . '/config')
+            ),
+            '/\.yaml/i'
+        );
+
+        /** @var SplFileInfo $file */
+        foreach ($regexIterator as $file)
+        {
+            $loader->load((string) $file);
+        }
     }
 }
