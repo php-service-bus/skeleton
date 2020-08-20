@@ -8,10 +8,10 @@ reset: ## Reset all data
 start: ## Run supporting application containers
 	@docker-compose -f docker-compose.yml up --build -d
 
-consumer-logs:
+consumer-logs: ## Display consumer logs
 	@docker logs service-bus-skeletone-consumer -f
 
-consumer-restart: ## Display consumer logs
+consumer-restart: ## Restart consumer
 	@docker restart service-bus-skeletone-consumer
 	@docker logs service-bus-skeletone-consumer -f
 
