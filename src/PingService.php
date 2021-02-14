@@ -15,25 +15,21 @@ namespace App;
 
 use Amp\Promise;
 use ServiceBus\Common\Context\ServiceBusContext;
-use ServiceBus\Services\Annotations\CommandHandler;
-use ServiceBus\Services\Annotations\EventListener;
+use ServiceBus\Services\Attributes\CommandHandler;
+use ServiceBus\Services\Attributes\EventListener;
 
 /**
  *
  */
 final class PingService
 {
-    /**
-     * @CommandHandler()
-     */
+    #[CommandHandler]
     public function handle(Ping $command, ServiceBusContext $context): Promise
     {
         return $context->delivery(new Pong());
     }
 
-    /**
-     * @EventListener(description="Pong message received")
-     */
+    #[EventListener(description: 'Pong message received')]
     public function whenPong(Pong $event, ServiceBusContext $context): void
     {
     }
