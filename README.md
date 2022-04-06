@@ -15,22 +15,6 @@ After launching containers, execute
 ```bash
 make ping && make consumer-logs
 ```
-## Documentation
-Documentation can be found in the [documentation](https://github.com/php-service-bus/documentation) repository
-
-* [Installation](https://github.com/php-service-bus/documentation/blob/master/pages/installation.md)
-* [Basic information](https://github.com/php-service-bus/documentation/blob/master/pages/basic_information.md)
-* [Available modules](https://github.com/php-service-bus/documentation/blob/master/pages/available_modules.md)
-  * [Components](https://github.com/php-service-bus/documentation/blob/master/pages/available_modules.md#components)
-  * [Sagas](https://github.com/php-service-bus/documentation/blob/master/pages/modules/sagas.md)
-  * [Event Sourcing](https://github.com/php-service-bus/documentation/blob/master/pages/modules/event_sourcing.md)
-  * [Scheduler](https://github.com/php-service-bus/documentation/blob/master/pages/modules/scheduler.md)
-  * [Transport](https://github.com/php-service-bus/documentation/blob/master/pages/available_modules.md#transport)
-  * [Database](https://github.com/php-service-bus/documentation/blob/master/pages/available_modules.md#database)
-* [Available packages](https://github.com/php-service-bus/documentation/blob/master/pages/available_packages.md)
-  * [Http-client](https://github.com/php-service-bus/documentation/blob/master/pages/packages/http_client.md)
-  * [Cache](https://github.com/php-service-bus/documentation/blob/master/pages/packages/cache.md)
-
 ## Contributing
 Contributions are welcome! Please read [CONTRIBUTING](CONTRIBUTING.md) for details.
 

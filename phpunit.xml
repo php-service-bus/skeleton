@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" backupGlobals="false"
-         backupStaticAttributes="false" beStrictAboutTestsThatDoNotTestAnything="false" colors="true" verbose="true"
-         convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true"
-         failOnRisky="true" failOnWarning="true" stopOnFailure="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         colors="true"
+         cacheResult="false"
+         convertDeprecationsToExceptions="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="true"
+         stopOnError="false"
+         stopOnFailure="false"
+         beStrictAboutChangesToGlobalState="true"
+         beStrictAboutOutputDuringTests="true"
+         verbose="true"
+>
     <coverage>
         <include>
             <directory>./src</directory>
@@ -16,7 +26,8 @@
         <ini name="error_reporting" value="-1"/>
     </php>
     <testsuites>
-        <testsuite name="PHP Service Bus skeleton">
+
+        <testsuite name="Application">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
